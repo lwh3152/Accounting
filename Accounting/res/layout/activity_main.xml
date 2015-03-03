@@ -16,10 +16,10 @@
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content" 
 		    android:textSize="20sp"
-		    android:paddingLeft="20sp"
+		    android:paddingLeft="20dip"
 		    android:layout_centerVertical="true"
 		    android:textColor="@android:color/white"
-	    />
+	    	/>
 	</RelativeLayout>
 	
 	<LinearLayout 
@@ -119,6 +119,7 @@
 		    android:layout_alignParentBottom="true"
 		    android:paddingTop="5dip">
 				<Button 
+				    android:id="@+id/btnStartAccount"
 				    android:layout_width="wrap_content" 
 				    android:layout_height="wrap_content" 
 				    android:textSize="20sp"
@@ -126,6 +127,7 @@
 				    android:paddingRight="5dip"
 				    android:text="记一笔"/>
 				<Button 
+				    android:id="@+id/btnSelectAccount"
 				    android:layout_width="wrap_content" 
 				    android:layout_height="wrap_content" 
 				    android:textSize="20sp"

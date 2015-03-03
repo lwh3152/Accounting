@@ -5,11 +5,13 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,9 @@ public class MainActivity extends Activity {
 	private int mYear;
     private int mMonth;
     private int mDay;
+    
+    private Button btnStartAccount,btnSelectAccount;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,6 +37,26 @@ public class MainActivity extends Activity {
 		mDateDisplay=(TextView)findViewById(R.id.dateDisplay);
 		init(context);
 		mDateDisplay.setOnClickListener(new ChangeDataClick());
+		
+		btnStartAccount = (Button) findViewById(R.id.btnStartAccount);
+		btnSelectAccount = (Button) findViewById(R.id.btnSelectAccount);
+		
+		
+		// 记一笔
+		btnStartAccount.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(context,StartAccount.class);
+				startActivity(intent);
+			}
+		});
+		// 查看流水
+		btnSelectAccount.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				
+			}
+		});
 	}
 	
 	private void init(final Context context){
