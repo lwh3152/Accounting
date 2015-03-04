@@ -32,7 +32,7 @@ public class SQLiteHelper extends SQLiteOpenHelper{
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		String createTableSql = "create table if not exists" + DBHelper.DB_TABLENAME +
+		String createTableSql = "create table if not exists " + DBHelper.DB_TABLENAME +
 				" (id integer primary key autoincrement,price int,type int,status int," +
 				"year int,month int,day int,note text,ctm datetime,utm timestamp)";
 		db.execSQL(createTableSql);

@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.lwh.accounting.entity.Accounting;
 
+import android.R.integer;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -33,7 +34,12 @@ public class DBHelper {
 		}
 	}
 	
-	
+	private static void closeDatabase(){
+		if (dbInstance != null) {
+			dbInstance.close();
+			dbInstance = null;
+		}
+	}
 	/**
 	 * 插入数据
 	 * @param price	价格
@@ -47,11 +53,11 @@ public class DBHelper {
 	 * @param utm	更改时间
 	 * @return
 	 */
-	public static long insertData(int price,int type,int status,
+	public long insertData(int price,int type,int status,
 			int year,int month,int day,String note,String ctm,String utm){
 		ContentValues content = getContent(price, type, status, year, month, day, note, ctm, utm);
 		long result = dbInstance.insert(DB_TABLENAME, null, content);
-		dbInstance.close();
+		closeDatabase();
 		return result;
 	}
 	// type:1-收入,2-支出;status:1-有效,2-无效
@@ -70,8 +76,19 @@ public class DBHelper {
 		return content;
 	}
 	
-	public static List<Accounting> getAccounting(){
-		String sql = "select * from " + DB_TABLENAME ;
+	/**
+	 * 更加年月日,查询收入支出详情
+	 * @param mYear
+	 * @param mMonth
+	 * @param mDay
+	 * @param mType 1-收入,2-支出
+	 * @param mStatus 1-有效,2-无效
+	 * @return
+	 */
+	public List<Accounting> getAccounting(int mYear,int mMonth,int mDay,int mType,int mStatus){
+		String sql = "select * from " + DB_TABLENAME + " where 1=1 and year=" + mYear +
+				" and month=" + mMonth + " and day=" + mDay + " and type=" + mType +
+				" and status=" + mStatus;
 		//dbInstance.execSQL(sql, null);
 		Cursor cursor = dbInstance.rawQuery(sql, null);
 		List<Accounting> list = new ArrayList<Accounting>();
@@ -89,7 +106,7 @@ public class DBHelper {
 			Accounting selectAccount = getAccount(id, price, type, status, year, month, day, note, null, null);
 			list.add(selectAccount);
 		}
-		dbInstance.close();
+		closeDatabase();
 		return list;
 	}
 	
@@ -106,5 +123,18 @@ public class DBHelper {
 		account.setCtm(ctm);
 		account.setUtm(utm);
 		return account;
+	}
+	
+	// 查询总收入
+	public int getTotalInCome(int year,int month,int day,int type,int status){
+		String sql = "select sum(price) from " + DB_TABLENAME + " where 1=1 and year=" + year + 
+				" and month=" + month +" and day=" + day + " and type=" + type + " and status=" + status;
+		Cursor cursor = dbInstance.rawQuery(sql, null);
+		int totalPrice = 0;
+		while (cursor.moveToNext()) {
+			totalPrice = cursor.getInt(0);
+		}
+		closeDatabase();
+		return totalPrice;
 	}
 }

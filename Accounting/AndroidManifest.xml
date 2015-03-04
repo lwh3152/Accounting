@@ -23,8 +23,8 @@
             </intent-filter>
         </activity>
         <!-- android:theme="@android:style/Theme.NoTitleBar" -->
-        <activity android:name="com.lwh.accounting.StartAccount"
-            	  ></activity>
+        <activity android:name="com.lwh.accounting.StartAccount" ></activity>
+        <activity android:name="com.lwh.accounting.AccountDetail" ></activity>
     </application>
 
 </manifest>

@@ -28,26 +28,36 @@
 	    android:orientation="vertical"
 	    android:padding="20sp">
 	    <RelativeLayout 
-	        android:id="@+id/income"
+	        android:id="@+id/layoutIncome"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
 		    android:paddingTop="5dip">
 	    
 			<TextView
-			    android:id="@+id/dateDisplay2" 
+			    android:id="@+id/textIncome" 
 			    android:layout_width="wrap_content" 
 			    android:layout_height="wrap_content" 
 			    android:textSize="20sp"
-			    android:text="收入总额：￥5000"
+			    android:text="收入总额：￥"
 			    android:textColor="@android:color/black"
 		   		/>
+			<TextView 
+			    android:id="@+id/textViewIncome" 
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content" 
+			    android:textSize="20sp"
+			    android:text="5000"
+			    android:textColor="@color/green"
+			    android:layout_toRightOf="@id/textIncome"
+			    />
 			<TextView 
 			    android:layout_width="wrap_content" 
 			    android:layout_height="wrap_content" 
 			    android:textSize="20sp"
 			    android:layout_alignParentRight="true"
 			    android:paddingRight="5dip"
-			    android:text=">"/>
+			    android:text=">"
+			    />
 		</RelativeLayout>
 		<View
 	        android:layout_width="fill_parent"
@@ -55,19 +65,28 @@
 	        android:layout_marginTop="5dip"
 	        android:background="@android:color/black" />
 		<RelativeLayout 
-		    android:id="@+id/spending"
+		    android:id="@+id/layoutSpending"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
 		    android:paddingTop="5dip">
 	    
 			<TextView
-			    android:id="@+id/dateDisplay2" 
+			    android:id="@+id/textSpend" 
 			    android:layout_width="wrap_content" 
 			    android:layout_height="wrap_content" 
 			    android:textSize="20sp"
-			    android:text="支出总额：￥500"
+			    android:text="支出总额：￥"
 			    android:textColor="@android:color/black"
 		   		/>
+			<TextView 
+			    android:id="@+id/textViewSpend" 
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content" 
+			    android:textSize="20sp"
+			    android:text="5000"
+			    android:textColor="@color/red"
+			    android:layout_toRightOf="@id/textSpend"
+			    />
 			<TextView 
 			    android:layout_width="wrap_content" 
 			    android:layout_height="wrap_content" 
@@ -88,13 +107,21 @@
 		    android:paddingTop="5dip">
 	    
 			<TextView
-			    android:id="@+id/dateDisplay2" 
+			    android:id="@+id/textRemain" 
 			    android:layout_width="wrap_content" 
 			    android:layout_height="wrap_content" 
 			    android:textSize="20sp"
-			    android:text="余        额：￥4500"
+			    android:text="余        额：￥"
 			    android:textColor="@android:color/black"
 		   		/>
+			<TextView 
+			    android:id="@+id/textViewRemain" 
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content" 
+			    android:textSize="20sp"
+			    android:text="4500"
+			    android:layout_toRightOf="@id/textRemain"
+			    />
 			<TextView 
 			    android:layout_width="wrap_content" 
 			    android:layout_height="wrap_content" 
