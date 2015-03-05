@@ -137,4 +137,24 @@ public class DBHelper {
 		closeDatabase();
 		return totalPrice;
 	}
+	
+	// 修改账单信息
+	public int updateAccount(int id,int type,int price,int year,int month,int day,String note,String utm){
+		/*
+		String sql = "update " + DB_TABLENAME + " set type="+type + ",price="+price+",year="+
+				year+",month="+month+",day="+day+",note="+note+"where id="+id;
+		dbInstance.execSQL(sql,null);
+		*/
+		
+		ContentValues values = new ContentValues();
+		values.put("type", type);
+		values.put("price", price);
+		values.put("year", year);
+		values.put("month", month);
+		values.put("day", day);
+		values.put("note", note);
+		values.put("utm", utm);
+		
+		return dbInstance.update(DB_TABLENAME, values, "id=?", new String[]{String.valueOf(id)});
+	}
 }

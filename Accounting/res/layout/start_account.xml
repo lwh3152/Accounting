@@ -41,6 +41,16 @@
                 android:layout_marginRight="10dip"
                 android:layout_centerVertical="true"
                 />
+            <Button 
+                android:id="@+id/btnEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="编辑"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dip"
+                android:visibility="gone"
+                android:layout_centerVertical="true"
+                />
         </RelativeLayout>
 
         <LinearLayout

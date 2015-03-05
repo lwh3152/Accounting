@@ -38,15 +38,27 @@
             android:id="@+id/textPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="500"
+            android:text="5005210"
             android:layout_marginLeft="2dip"
             android:layout_toRightOf="@id/textType"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/textNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="卖板卖材"
+            android:layout_marginLeft="10dip"
+            android:layout_alignParentRight="true"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:maxWidth="90dip"
             android:textSize="16sp" />
         <TextView
             android:id="@+id/textf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mark"
+            android:visibility="gone"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="2dip"
