@@ -10,6 +10,6 @@ public class AccountSet extends Activity{
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.account_set);
-		
+		// what is happen
 	}
 }
