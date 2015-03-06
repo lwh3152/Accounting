@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
     private int mDay;
     private RelativeLayout layoutIncome,layoutSpend;
     private TextView textIncome,textSpend,textRemain;
-    private Button btnStartAccount,btnSelectAccount;
+    private Button btnStartAccount,btnSelectAccount,btnSetAccount;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,7 @@ public class MainActivity extends Activity {
 		mDateDisplay.setOnClickListener(new ChangeDataClick());
 		btnStartAccount = (Button) findViewById(R.id.btnStartAccount);
 		btnSelectAccount = (Button) findViewById(R.id.btnSelectAccount);
+		btnSetAccount = (Button) findViewById(R.id.btnSetAccount);
 		textIncome = (TextView) findViewById(R.id.textViewIncome);
 		textSpend = (TextView) findViewById(R.id.textViewSpend);
 		textRemain = (TextView) findViewById(R.id.textViewRemain);
@@ -55,7 +56,15 @@ public class MainActivity extends Activity {
 		btnStartAccount.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(context,StartAccount.class);
+				Intent intent = new Intent(context,AddAccount.class);
+				startActivityForResult(intent,1);
+			}
+		});
+		// 设置
+		btnSetAccount.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(context,AccountSet.class);
 				startActivity(intent);
 			}
 		});
@@ -71,6 +80,22 @@ public class MainActivity extends Activity {
 		layoutSpend.setOnClickListener(new LayoutOnClick(2));	// 支出详情
 	}
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(resultCode == RESULT_OK){
+			switch (requestCode) {	// requestCode对应启动Activity时传的code
+			case 0:
+			case 1:	
+				// 刷新数据
+				updateDisplay();
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	
 	class LayoutOnClick implements OnClickListener{
 		int type = 0;
 		public LayoutOnClick(int mType){
@@ -83,7 +108,7 @@ public class MainActivity extends Activity {
 			intent.putExtra("year", mYear);
 			intent.putExtra("month", mMonth+1);
 			intent.putExtra("day", mDay);
-			startActivity(intent);
+			startActivityForResult(intent, 0);
 		}
 	}
 	
@@ -117,10 +142,10 @@ public class MainActivity extends Activity {
     }
 	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener(){                
         public void onDateSet(DatePicker view, int year,int monthOfYear, int dayOfMonth){                    
-            mYear = year;                    
-            mMonth = monthOfYear;                    
-            mDay = dayOfMonth;                    
-            updateDisplay();                
+            mYear = year;
+            mMonth = monthOfYear;
+            mDay = dayOfMonth;
+            updateDisplay();
         }            
     };
 	protected Dialog onCreateDialog(int id){    

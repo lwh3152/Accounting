@@ -1,10 +1,7 @@
 package com.lwh.accounting;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,9 +13,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
+import com.lwh.accounting.adapter.AccountAdapter;
 import com.lwh.accounting.entity.Accounting;
-import com.lwh.accounting.entity.SerializableMap;
 import com.lwh.accounting.util.DBHelper;
 
 public class AccountDetail extends Activity{
@@ -26,6 +22,9 @@ public class AccountDetail extends Activity{
 	TextView textDetail;
 	ListView listview;
 	List<Map<String, Object>> accountData;
+	int type,year,month,day;
+	SimpleAdapter adapter;
+	AccountAdapter dataAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +35,16 @@ public class AccountDetail extends Activity{
 		findViewById(R.id.btnBack).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				setResult(RESULT_OK);
 				AccountDetail.this.finish();
 			}
 		});
 		
 		Intent intent = getIntent();
-		int type = intent.getExtras().getInt("type");
-		int year = intent.getExtras().getInt("year");
-		int month = intent.getExtras().getInt("month");
-		int day = intent.getExtras().getInt("day");
+		type = intent.getExtras().getInt("type");
+		year = intent.getExtras().getInt("year");
+		month = intent.getExtras().getInt("month");
+		day = intent.getExtras().getInt("day");
 		
 		textDetail = (TextView) findViewById(R.id.textDetail);
 		if (type == 1) {
@@ -53,63 +53,43 @@ public class AccountDetail extends Activity{
 			textDetail.setText("支出详情");
 		}
 		
+		// 查询收入/支出的列表
 		DBHelper dbHelper = new DBHelper(AccountDetail.this);
 		dbHelper.openDatabase();
-		List<Accounting> accountList = dbHelper.getAccounting(year, month, day, type, 1);
+		final List<Accounting> accountList = dbHelper.getAccounting(year, month, day, type, 1);
 		
 		listview = (ListView) findViewById(R.id.listView);
-		accountData = getData(accountList);
-		SimpleAdapter adapter = new SimpleAdapter(this,accountData,R.layout.listview_detail,
-                new String[]{"index","date","type","price","note"},
-                new int[]{R.id.textIndex,R.id.textDate,R.id.textType,R.id.textPrice,R.id.textNote});
-		listview.setAdapter(adapter);
+		dataAdapter = new AccountAdapter(AccountDetail.this, accountList);
+		listview.setAdapter(dataAdapter);
 		
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				
-				Map<String, Object> map = accountData.get(arg2);
-				Intent intent = new Intent(AccountDetail.this,StartAccount.class);
-				intent.putExtras(getBundleObj(map));
-				startActivity(intent);
+				Intent intent = new Intent(AccountDetail.this,AddAccount.class);
+				Accounting account = accountList.get(arg2);
+				intent.putExtra("account", account);
+				startActivityForResult(intent, 0);
+				
 			}
 		});
 	}
 	
-	private List<Map<String, Object>> getData(List<Accounting> accountList) {
-		
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        if (accountList != null && accountList.size() > 0) {
-			for (int i = 0;i<accountList.size();i++) {
-				Accounting accounting = accountList.get(i);
-				int year = accounting.getYear();
-				int month = accounting.getMonth();
-				int day = accounting.getDay();
-				int type = accounting.getType();
-				int price = accounting.getPrice();
-				String note = accounting.getNote();
-				
-				String date = year + "-" + month + "-" + day;
-				String strType = type == 1 ? "收入" : "支出" ;
-				
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("index", i+1+".");
-		        map.put("date", date);
-		        map.put("type", strType);
-		        map.put("price", price);
-		        map.put("note", note);
-		        list.add(map);
-			}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(resultCode == RESULT_OK){
+			// 编辑成功回来后,刷新列表
+			// 刷新listview,首先得是数据源变化,再调用notifyDataSetChanged方法
+			// 重新的查询一遍数据
+			DBHelper dbHelper = new DBHelper(AccountDetail.this);
+			dbHelper.openDatabase();
+			List<Accounting> accountList = dbHelper.getAccounting(year, month, day, type, 1);
+			
+			dataAdapter = new AccountAdapter(AccountDetail.this, accountList);
+			dataAdapter.notifyDataSetChanged();
+			listview.setAdapter(dataAdapter);
 		}
-        return list;
-    }
-	
-	private Bundle getBundleObj(Map<String, Object> map){
-		SerializableMap serMap = new SerializableMap();
-		serMap.setMap(map);
-		Bundle bundle = new Bundle();
-		bundle.putSerializable("accountInfo", serMap);
-		return bundle;
 	}
 }

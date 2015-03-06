@@ -154,6 +154,14 @@
 				    android:paddingRight="5dip"
 				    android:text="记一笔"/>
 				<Button 
+				    android:id="@+id/btnSetAccount"
+				    android:layout_width="wrap_content" 
+				    android:layout_height="wrap_content" 
+				    android:textSize="20sp"
+				    android:layout_centerHorizontal="true"
+				    android:paddingRight="5dip"
+				    android:text="设   置"/>
+				<Button 
 				    android:id="@+id/btnSelectAccount"
 				    android:layout_width="wrap_content" 
 				    android:layout_height="wrap_content" 

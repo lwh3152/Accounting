@@ -77,7 +77,7 @@ public class DBHelper {
 	}
 	
 	/**
-	 * 更加年月日,查询收入支出详情
+	 * 根据年月日,查询收入支出详情
 	 * @param mYear
 	 * @param mMonth
 	 * @param mDay
