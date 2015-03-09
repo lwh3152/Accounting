@@ -2,9 +2,6 @@ package com.lwh.accounting;
 
 import java.util.Calendar;
 
-import com.lwh.accounting.util.DBHelper;
-
-import android.R.integer;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -19,7 +16,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.lwh.accounting.db.DBHelper;
+import com.lwh.accounting.util.PreferencesUtil;
 
 public class MainActivity extends Activity {
 	
@@ -31,6 +30,7 @@ public class MainActivity extends Activity {
     private RelativeLayout layoutIncome,layoutSpend;
     private TextView textIncome,textSpend,textRemain;
     private Button btnStartAccount,btnSelectAccount,btnSetAccount;
+    public static final String PRE_KEY_NAME = "Date";
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(context,AccountSet.class);
-				startActivity(intent);
+				startActivityForResult(intent,2);
 			}
 		});
 		// 查看流水
@@ -78,6 +78,7 @@ public class MainActivity extends Activity {
 		
 		layoutIncome.setOnClickListener(new LayoutOnClick(1));	// 收入详情
 		layoutSpend.setOnClickListener(new LayoutOnClick(2));	// 支出详情
+		
 	}
 	
 	@Override
@@ -87,6 +88,7 @@ public class MainActivity extends Activity {
 			switch (requestCode) {	// requestCode对应启动Activity时传的code
 			case 0:
 			case 1:	
+			case 2:
 				// 刷新数据
 				updateDisplay();
 				break;
@@ -134,7 +136,6 @@ public class MainActivity extends Activity {
                     .append(mDay).append("日"));
         int income = changeAccountData(mYear,mMonth+1,mDay,1,1);
         int spending = changeAccountData(mYear, mMonth+1, mDay, 2,1);
-        System.out.println("income="+income+",spending"+spending);
         textIncome.setText(Integer.toString(income));
         textSpend.setText(Integer.toString(-spending));
         textRemain.setText(Integer.toString(income+spending));
@@ -164,9 +165,9 @@ public class MainActivity extends Activity {
 	
 	// 根据选择的日期,实时更新对应的收入,支出情况
 	private int changeAccountData(int year,int month,int day,int type,int status){
+		long flag = PreferencesUtil.getValue(context, PRE_KEY_NAME);
 		DBHelper dbHelper = new DBHelper(MainActivity.this);
 		dbHelper.openDatabase();
-		return dbHelper.getTotalInCome(year, month, day, type, status);
+		return dbHelper.getTotalInCome(year, month, day, type, status,flag);
 	}
-
 }

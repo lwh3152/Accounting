@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:background="@drawable/android_menu_bg" >
+
+        <Button
+            android:id="@+id/btSettingBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="返回"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="设置"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+    <LinearLayout 
+        android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:orientation="vertical"
+        >
+        <TextView 
+            android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text="选择时间查看"
+	        android:visibility="gone"
+            />
+	    <RadioGroup
+	        android:id="@+id/radioGroupDate"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        >
+	
+	        <RadioButton
+	            android:id="@+id/radioYear"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:button="@null"
+	            android:text="按年查看"
+	            android:background="#F5F5F5"
+	            android:paddingRight="20dip"
+	            android:paddingLeft="20dip"
+	            android:drawableRight="@android:drawable/btn_radio"
+	            />
+	
+	        <RadioButton
+	            android:id="@+id/radioMonth"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:button="@null"
+	            android:text="按月查看"
+	            android:paddingRight="20dip"
+	            android:background="#F0F0F0"
+	            android:paddingLeft="20dip"
+	            android:drawableRight="@android:drawable/btn_radio" 
+	            />
+	
+	        <RadioButton
+	            android:id="@+id/radioDay"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:button="@null"
+	            android:text="按日查看"
+	            android:checked="true"
+	            android:paddingRight="20dip"
+	            android:background="#F5F5F5"
+	            android:paddingLeft="20dip"
+	            android:drawableRight="@android:drawable/btn_radio" 
+	            />
+	    </RadioGroup>
+	</LinearLayout>
+</LinearLayout>

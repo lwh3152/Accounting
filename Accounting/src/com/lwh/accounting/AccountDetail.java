@@ -14,8 +14,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import com.lwh.accounting.adapter.AccountAdapter;
+import com.lwh.accounting.db.DBHelper;
 import com.lwh.accounting.entity.Accounting;
-import com.lwh.accounting.util.DBHelper;
 
 public class AccountDetail extends Activity{
 

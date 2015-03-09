@@ -17,8 +17,9 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.lwh.accounting.db.DBHelper;
 import com.lwh.accounting.entity.Accounting;
-import com.lwh.accounting.util.DBHelper;
 
 public class AddAccount extends Activity {
 
